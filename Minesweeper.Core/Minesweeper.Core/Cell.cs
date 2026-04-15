@@ -1,6 +1,6 @@
 ﻿namespace Minesweeper.Core
 {
-    internal class Cell
+    public class Cell
     {
         /// <summary>
         /// If the cell contains a mine
@@ -26,10 +26,15 @@
         /// The y coordinate on the plane where the cell is
         /// </summary>
         public int Y;
-        public Cell(int x, int y)
+        /// <summary>
+        /// The ID, that tells the GenerateBoard function how to build the board
+        /// </summary>
+        public int ID;
+        public Cell(int x, int y, int id)
         {
             X = x;
             Y = y;
+            ID = id;
         }
         /// <summary>
         /// Returns the actual representation of the cell's current state
@@ -56,10 +61,11 @@
             }
             else return "."; //blank cell
         }
-        /*public int Search()
+        public int Search()
         {
+            
             //do something to look for mines in the adjacent cells, and return adjacent mines
         }
-        */
+        
     }
 }

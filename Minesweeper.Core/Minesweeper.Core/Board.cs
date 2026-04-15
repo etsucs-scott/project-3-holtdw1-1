@@ -3,6 +3,10 @@
     public class Board
     {
         /// <summary>
+        /// The cells on the board
+        /// </summary>
+        public Cell[,] Cells { get; set; }
+        /// <summary>
         /// The size of the board (small 8x8, medium 12x12, or large 16x16)
         /// </summary>
         public Size Size { get; set; }
@@ -13,12 +17,7 @@
         /// <summary>
         /// The number that determines the mine placement
         /// </summary>
-        public int Seed { get; set; }
-        public Board(Size size, int mines)
-        {
-            Size = size;
-            Mines = mines;
-        }  
+        public int Seed { get; set; } 
         /// <summary>
         /// Generates the board, taking in size, number of mines, and the seed
         /// </summary>
@@ -28,13 +27,14 @@
         public void GenerateBoard(Size size, int mines, int seed)
         {
             if (size == Size.Small)
-            { 
-                Board Board = new Board(Size.Small, 10);
+            {
+                int ID = 0;
                 for (int y = 0; y < 9; y++)
                 {
                     for (int x = 0; x < 9; x++)
                     {
-                        Cell cell = new Cell(x, y);
+                        ID++;
+                        Cell cell = new Cell(x, y, ID);
                     }
                 }
             }
