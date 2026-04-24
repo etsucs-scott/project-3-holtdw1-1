@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Minesweeper.Core
+﻿namespace Minesweeper.Core
 {
     public class Cell
     {
@@ -62,33 +60,41 @@ namespace Minesweeper.Core
             }
             else return "."; //blank cell
         }
-        public int Search(Board board, int x, int y)
+        /// <summary>
+        /// Search all cells to the left of current position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int SearchLeft (Board board, int x, int y)
         {
             int minesFound = 0;
-            if (x - 1 !< 0) // make sure that you don't leave the bounds
-            {
-                if (board.Cells[x - 1, y].isMine == true) // search left
-                {
-                    minesFound++;
-                }
-                if (board.Cells[x - 1, y - 1].isMine == true) // search down left
-                {
-                    minesFound++;
-                }
-                if (board.Cells[x - 1, y + 1].isMine == true) // search up left
-                {
-                    minesFound++;
-                }
-            }
-            if (board.Cells[x, y - 1].isMine == true) // search down
+            if (board.Cells[x - 1, y].isMine == true) // search left
             {
                 minesFound++;
             }
+            if (board.Cells[x - 1, y - 1].isMine == true) // search down left
+            {
+                minesFound++;
+            }
+            if (board.Cells[x - 1, y + 1].isMine == true) // search up left
+            {
+                minesFound++;
+            }
+            return minesFound;
+        }
+        /// <summary>
+        /// Search all cells to the right of current position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int SearchRight (Board board, int x, int y)
+        {
+            int minesFound = 0;
             if (board.Cells[x + 1, y].isMine == true) // search right
-            {
-                minesFound++;
-            }
-            if (board.Cells[x, y + 1].isMine == true) // search up
             {
                 minesFound++;
             }
@@ -102,6 +108,48 @@ namespace Minesweeper.Core
             }
             return minesFound;
         }
-
+        /// <summary>
+        /// Search the cell above current position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int SearchUp (Board board, int x, int y)
+        {
+            int minesFound = 0;
+            if (board.Cells[x, y + 1].isMine == true) // search up
+            {
+                minesFound++;
+            }
+            return minesFound;
+        }
+        /// <summary>
+        /// Search the cell below current position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int SearchDown (Board board, int x, int y)
+        {
+            int minesFound = 0;
+            if (board.Cells[x, y - 1].isMine == true) // search down
+            {
+                minesFound++;
+            }
+            return minesFound;
+        }
+        /// <summary>
+        /// Search all cells surrounding current position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int SearchAll(Board board, int x, int y)
+        {
+            return SearchRight(board, x, y) + SearchLeft(board, x, y) + SearchDown(board, x, y) + SearchUp(board, x, y);
+        }
     }
 }
