@@ -64,7 +64,7 @@
 
             if (size == 8)//small
             {
-                while(minesPlaced < 11)//less than 11 is 10
+                while (minesPlaced < 11)//less than 11 is 10
                 {
                     int x = random.Next(0, size);//a number from 0 to whatever size is
                     int y = random.Next(0, size);
@@ -79,7 +79,7 @@
             }
             if (size == 12)
             {
-                while(minesPlaced < 26)
+                while (minesPlaced < 26)
                 {
                     int x = random.Next(0, size);
                     int y = random.Next(0, size);
@@ -94,7 +94,7 @@
             }
             if (size == 16)
             {
-                while(minesPlaced < 41)
+                while (minesPlaced < 41)
                 {
                     int x = random.Next(0, size);
                     int y = random.Next(0, size);
@@ -109,6 +109,26 @@
             }
         }
 
-
+        public void ShowBoard()
+        {
+            int display = 0;
+            while (display <= (int)Size)
+            {
+                Console.Write($"{display}");
+                display++;
+            }
+            Console.WriteLine();
+            display = 1;
+            for (int y = 0; y < (int)Size; y++)
+            {
+                Console.Write($"{display}");
+                display++;
+                for (int x = 0; x < (int)Size; x++)
+                {
+                    Console.Write(Cells[x, y].ToString());
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }
