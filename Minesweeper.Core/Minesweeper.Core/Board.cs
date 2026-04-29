@@ -75,7 +75,7 @@
                     }
                     Cells[x, y] = new Cell(x, y, true, false, false, 0);//make a new cell with isMine set to true
                     minesPlaced++;//increment
-                    Cells[x, y].Search(this, x, y);//add 1 to all adjacent cells' mine counts
+                    Cells[x, y].Sweep(this, x, y);//add 1 to all adjacent cells' mine counts
                 }
             }
             if (size == 12)
@@ -91,6 +91,7 @@
                     }
                     Cells[x, y] = new Cell(x, y, true, false, false, 0);
                     minesPlaced++;
+                    Cells[x, y].Sweep(this, x, y);//add 1 to all adjacent cells' mine counts
                 }
             }
             if (size == 16)
@@ -106,6 +107,7 @@
                     }
                     Cells[x, y] = new Cell(x, y, true, false, false, 0);
                     minesPlaced++;
+                    Cells[x, y].Sweep(this, x, y);//add 1 to all adjacent cells' mine counts
                 }
             }
         }
@@ -130,12 +132,60 @@
             for (int y = 0; y < (int)Size; y++)
             {
                 Console.Write($"{display}| "); //make sure to print a number on each row before showing the cells
+                if (display < 10)
+                {
+                    Console.Write(" ");
+                } //formatting for double digit numbers
                 display++;
                 for (int x = 0; x < (int)Size; x++)
                 {
                     Console.Write(Cells[x, y].ToString());//makes sure to show the cell's current state
                 }
                 Console.WriteLine();//make a new line after each row
+            }
+        }
+        /// <summary>
+        /// Search all adjacent spots around a mine
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void Search(Board board, int x, int y)
+        {
+            if (board.Cells[x, y].isRevealed || board.Cells[x, y].isFlagged || board.Cells[x, y].isMine)
+            {
+                //if the cell is already revealed or flagged, don't touch it
+                return;
+            }
+
+            board.Cells[x, y].isRevealed = true;
+
+            if (board.Cells[x, y].adjacentMines > 0)
+            {
+                //if the cell has mines next to it, don't kill the player
+                return;
+            }
+
+            //disclaimer: AI helped with this section. I was struggling to find a way to do it nicely without 
+            //manually writing each x+1 and the like
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    if (dx == 0 && dy == 0)
+                    {
+                        continue; // don't search self
+                    }
+
+                    int nx = x + dx; //calculate the new x and y coordinates for the adjacent cell
+                    int ny = y + dy; //and make sure to search it
+
+                    if (nx >= 0 && nx < (int)board.Size && ny >= 0 && ny < (int)board.Size)
+                    {
+                        //stay in bounds
+                        Search(board, nx, ny); // recursive call to find all of them
+                    }
+                }
             }
         }
     }

@@ -60,7 +60,13 @@
             }
             else return "."; //blank cell
         }
-        public void Search(Board board, int x, int y)
+        /// <summary>
+        /// Adds 1 to the adjacentMines count of all adjacent cells
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void Sweep(Board board, int x, int y)
         {
             //add 1 to all adjacent cells' mine counts
             if (x - 1 > 0 && y - 1 > 0 && x + 1 < (int)board.Size && y + 1 < (int)board.Size)
@@ -111,10 +117,7 @@
                     }
                 }
             }
-            if (adjacentMines == 0 && isMine == false)
-            {
-                isRevealed = true; //if the cell has no adjacent mines and isn't a mine, reveal it
-            }
         }
     }
 }
+
