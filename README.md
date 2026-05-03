@@ -1,43 +1,33 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ozVFrFMv)
-# CSCI 1260 — Project
+## Getting Started!
+### Clone the Repository
 
-## Project Instructions
-All project requirements, grading criteria, and submission details are provided on **D2L**.  
-Refer to D2L as the *authoritative source* for this assignment.
-
-This repository is intentionally minimal. You are responsible for:
-- Creating the solution and projects
-- Designing the class structure
-- Implementing the required functionality
+```bash
+git clone https://github.com/yourusername/minesweeper.git
+cd minesweeper
+```
 
 ---
 
-## Getting Started (CLI)
+### Building the Project
 
-You may use **Visual Studio**, **VS Code**, or the **terminal**.
-
-### Create a solution
-```bash
-dotnet new sln -n ProjectName
-```
-
-### Create a project (example: console app)
-```bash
-dotnet new console -n ProjectName.App
-```
-
-### Add the project to the solution
-```bash
-dotnet sln add ProjectName.App
-```
-
-### Build and run
 ```bash
 dotnet build
-dotnet run --project ProjectName.App
 ```
 
-## Notes
-- Commit early and commit often.
-- Your repository history is part of your submission.
-- Update this README with build/run instructions specific to your project.
+This will restore dependencies and compile the project.
+
+---
+
+### Running the Game
+
+```bash
+dotnet run --project Minesweeper.Core
+```
+
+The game will start in the console. Follow the console prompts to:
+
+1. Choose board size (`Small`, `Medium`, `Large`)
+2. Start a new game or load a saved game
+3. Reveal cells or place flags using coordinates
+The format and all further instructions should be properly explained by the console.
+If you wish to quit at any point in the game, simply type q, and it will take you back to the main menu
