@@ -9,6 +9,7 @@ namespace Minesweeper.Tests
         [Fact]
         public void ShowBoard_Test()
         {
+            //
             var board = new Board(Size.Small, 1);
             board.GenerateBoard(Size.Small);
 
