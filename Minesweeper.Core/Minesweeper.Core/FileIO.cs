@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Minesweeper.Core
+﻿namespace Minesweeper.Core
 {
     public class FileIO
     {
@@ -29,21 +23,53 @@ namespace Minesweeper.Core
         /// </summary>
         public Size Size;
         /// <summary>
-        /// 
+        /// The relative file path of the save file 
         /// </summary>
-        string FilePath;
+        public string FilePath;
+        /// <summary>
+        /// Saves the game with data
+        /// </summary>
+        /// <param name="highScore"></param>
+        /// <param name="moves"></param>
+        /// <param name="seed"></param>
+        /// <param name="size"></param>
         public void SaveGame(int highScore, int moves, int seed, Size size)
         {
             SaveData = $"hs_{highScore}:moves_{moves}:seed_{seed}:size_{size}";
             FilePath = "./Minesweeper_Save.txt";
-            File.WriteAllText(FilePath,SaveData);
+            File.WriteAllText(FilePath, SaveData);
         }
-        public void LoadGame(Board board)
+        /// <summary>
+        /// Loads the save file stored, if any
+        /// </summary>
+        /// <exception cref="InvalidDataException"></exception>
+        public void LoadGame()
         {
+            // Make sure the file exists
+            if (string.IsNullOrEmpty(FilePath) || !File.Exists(FilePath))
+            {
+                return; // nothing to load, do nothing
+            }
+
             string content = File.ReadAllText(FilePath);
-            var c = content.Split(':');
-            board.Score = c[0];
-            string moves = c[1];
+            var parts = content.Split(':');//find the delimeter, and split
+
+            if (parts.Length != 4)//if we don't get all the data, something is wrong
+            {
+                throw new InvalidDataException("Save file is invalid.");
+            }
+
+            try
+            {
+                HighScore = int.Parse(parts[0].Replace("hs_", ""));
+                Moves = int.Parse(parts[1].Replace("moves_", ""));
+                Seed = int.Parse(parts[2].Replace("seed_", ""));
+                Size = (Size)Enum.Parse(typeof(Size), parts[3].Replace("size_", ""));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException("Save file contains invalid data.", ex);
+            }
         }
     }
 }

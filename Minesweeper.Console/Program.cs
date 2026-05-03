@@ -2,9 +2,9 @@
 bool main = true;
 string action;
 string row;
-string column;//have to initialize here for scoping
+string column;
 FileIO file = new FileIO();
-Board board;//was having scoping issues, so I'm defining it here, initializing later
+Board board;//was having scoping issues, so I'm defining stuff here, initializing later
 
 while (main == true)
 {
@@ -567,7 +567,21 @@ while (main == true)
             }//play the game
             if (choice == 2)
             {
-                file.LoadGame(board);
+                if(file.SaveData == null)
+                {
+                    Console.WriteLine("No high scores yet! Play a game to set a high score!");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine($"Loading stored data from {file.FilePath}...");
+                    file.LoadGame();
+                    Console.WriteLine($"High Score: {file.HighScore}\n Moves: {file.Moves}\n Seed: {file.Seed}\nMap size: {file.Size}");
+                    Console.WriteLine("Press enter to return to main menu");
+                    Console.ReadLine();
+                }
             }
             if (choice == 3)
             {
